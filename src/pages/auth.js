@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import {useNavigate} from 'react-router'
 
 const AuthPage = () => {
   const [activeTab, setActiveTab] = useState('login');
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
   
   // Состояние для формы входа
   const [loginData, setLoginData] = useState({
@@ -62,32 +64,79 @@ const AuthPage = () => {
   };
 
   // Отправка формы входа
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     if (validateLogin()) {
-      console.log('Отправка данных входа:', loginData);
-      // Здесь будет запрос к API
-      alert('Вход выполнен успешно!');
+      try {
+        console.log('Отправка данных входа:', loginData);
+        
+        const response = await fetch('http://localhost:8080/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(loginData)
+        });
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          alert('Ошибка входа: ' + errorText);
+          return;
+        }
+        
+        const token = await response.text();
+        localStorage.setItem('token', token);
+        console.log(token);
+        navigate('/')
+       
+      } catch (error) {
+        console.error('Ошибка при входе:', error);
+        alert('Ошибка подключения к серверу');
+      }
     }
   };
 
   // Отправка формы регистрации
-  const handleRegisterSubmit = (e) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     if (validateRegister()) {
-      console.log('Отправка данных регистрации:', registerData);
-      // Здесь будет запрос к API
-      alert('Регистрация прошла успешно! Выполняется вход...');
-      // Переключаем на вкладку входа и заполняем данные
-      setActiveTab('login');
-      setLoginData({
-        email: registerData.email,
-        password: registerData.password,
-        rememberMe: false
-      });
+      try {
+        console.log('Отправка данных регистрации:', registerData);
+        
+        const response = await fetch('http://localhost:8080/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(registerData)
+        });
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          alert('Ошибка регистрации: ' + errorText);
+          return;
+        }
+        
+        const token = await response.text();
+        console.log(token);
+        localStorage.setItem('token', token); // Добавлен токен в localstorage
+        navigate('/')
+        
+        // Переключаем на вкладку входа и заполняем данные
+        setActiveTab('login');
+        setLoginData({
+          email: registerData.email,
+          password: registerData.password,
+          rememberMe: false
+        });
+      } catch (error) {
+        console.error('Ошибка при регистрации:', error);
+        alert('Ошибка подключения к серверу');
+      }
     }
   };
-
+  
+  
   // Обработчик входа через соцсети
   const handleSocialLogin = (provider) => {
     alert(`Вход через ${provider} будет реализован позже`);
