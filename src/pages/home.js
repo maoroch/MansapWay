@@ -2,14 +2,10 @@ import { motion } from 'framer-motion';
 import AimBot from '../components/AimBot';
 
 const HomePage = () => {
-  // Animation variants for sections and cards
+  // Варианты анимаций для секций
   const fadeInUp = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-  };
-
-  const cardHover = {
-    hover: { scale: 1.05, transition: { duration: 0.3 } },
   };
 
   const staggerContainer = {
@@ -23,8 +19,8 @@ const HomePage = () => {
   };
 
   return (
-    <div>
-      {/* Hero Section */}
+    <div className="relative min-h-screen">
+      {/* Геройская секция */}
       <motion.div
         className="min-h-screen bg-cover bg-center flex items-center justify-center text-white"
         style={{ backgroundImage: "url('/images/back.png')" }}
@@ -33,7 +29,7 @@ const HomePage = () => {
         transition={{ duration: 1 }}
       >
         <motion.div
-          className="p-10 rounded-lg text-center"
+          className="p-10 rounded-lg text-center max-w-3xl mx-auto"
           variants={fadeInUp}
           initial="hidden"
           animate="visible"
@@ -51,7 +47,7 @@ const HomePage = () => {
             <b className="text-yellow-300">MansapWay</b>
           </motion.h1>
           <motion.p
-            className="text-lg md:text-xl max-w-xl"
+            className="text-lg md:text-xl max-w-xl mx-auto"
             variants={fadeInUp}
           >
             Мы помогаем студентам колледжей определить подходящую профессию на основе их навыков, интересов и трендов рынка труда Казахстана.
@@ -60,7 +56,7 @@ const HomePage = () => {
         </motion.div>
       </motion.div>
 
-      {/* Why It Matters Section */}
+      {/* Секция "Почему это важно" */}
       <motion.div
         className="text-center px-4 md:px-20 lg:px-60 mt-20"
         variants={fadeInUp}
@@ -70,13 +66,13 @@ const HomePage = () => {
       >
         <h1 className="text-3xl md:text-4xl font-bold mb-4">Почему это важно</h1>
         <p className="text-lg leading-8 text-gray-700">
-          &gt; Более 60% студентов выбирают профессию случайно <br />
-          &gt; 70% молодых специалистов меняют профессию в первые 3 года <br />
+          Более 60% студентов выбирают профессию случайно <br />
+          70% молодых специалистов меняют профессию в первые 3 года <br />
           MansapWay помогает принять осознанное решение.
         </p>
       </motion.div>
 
-      {/* Features Section */}
+      {/* Секция "Наши возможности" */}
       <motion.section
         className="py-16 bg-white"
         variants={staggerContainer}
@@ -104,37 +100,35 @@ const HomePage = () => {
                 image: "/images/card3.jpg",
               },
             ].map((card, index) => (
-              <motion.div
+              <div
                 key={index}
                 className="bg-gray-100 rounded-lg shadow-md overflow-hidden"
-                variants={fadeInUp}
-                whileHover="hover"
-                custom={cardHover}
               >
                 <img
                   src={card.image}
                   alt={`card-${index}`}
                   className="w-full h-60 object-cover"
+                  style={{ minHeight: '240px' }}
                 />
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{card.title}</h3>
                   <p className="text-gray-600">{card.description}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </motion.section>
 
-      {/* How It Works Section */}
+      {/* Секция "Как работает сервис" */}
       <motion.div
-        className="service py-16 bg-gray-50"
+        className="py-16 bg-gray-50"
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
       >
-        <div className="row flex flex-col md:flex-row justify-center items-center gap-12 px-6 max-w-6xl mx-auto">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-12 px-6 max-w-6xl mx-auto">
           <motion.div
             className="md:w-1/2 text-center md:text-left"
             variants={fadeInUp}
@@ -154,19 +148,20 @@ const HomePage = () => {
             </p>
           </motion.div>
           <motion.div
-            className="image md:w-1/2"
+            className="md:w-1/2"
             variants={fadeInUp}
           >
             <img
               src="/images/laptop.jpg"
               className="w-full max-w-md mx-auto rounded-lg shadow-md"
               alt="Laptop"
+              style={{ minHeight: '200px', objectFit: 'cover' }}
             />
           </motion.div>
         </div>
       </motion.div>
 
-      {/* Statistics Section */}
+      {/* Секция "Ключевые цифры" */}
       <motion.section
         className="py-16 bg-white"
         variants={staggerContainer}
@@ -183,20 +178,19 @@ const HomePage = () => {
               { value: "87%", text: "Точность рекомендаций" },
               { value: "1 500+", text: "Успешно трудоустроено" },
             ].map((stat, index) => (
-              <motion.div
+              <div
                 key={index}
                 className="p-6 bg-gray-100 rounded-lg shadow"
-                variants={fadeInUp}
               >
                 <p className="text-4xl font-extrabold text-indigo-600">{stat.value}</p>
                 <p className="mt-2 text-gray-700">{stat.text}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </motion.section>
 
-      {/* Future Professions Section */}
+      {/* Секция "Профессии будущего" */}
       <motion.section
         className="py-16 bg-gray-50"
         variants={staggerContainer}
@@ -229,23 +223,21 @@ const HomePage = () => {
                 img: '/images/profession-iot.png',
               },
             ].map((prof, index) => (
-              <motion.div
+              <div
                 key={index}
                 className="bg-white rounded-lg shadow-md overflow-hidden"
-                variants={fadeInUp}
-                whileHover="hover"
-                custom={cardHover}
               >
                 <img
                   src={prof.img}
                   alt={prof.title}
                   className="w-full h-40 object-cover"
+                  style={{ minHeight: '160px' }}
                 />
                 <div className="p-6 text-left">
                   <h3 className="text-xl font-semibold mb-2">{prof.title}</h3>
                   <p className="text-gray-600">{prof.desc}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
