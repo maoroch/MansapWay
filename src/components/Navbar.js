@@ -16,7 +16,7 @@ const Navbar = () => {
         <div className="hidden md:absolute md:left-1/2 md:transform md:-translate-x-1/2 md:flex gap-10 space-x-6 text-gray-700 font-medium">
           <Link to="/" className="hover:text-indigo-600 transition">Главная</Link>
           <Link to="/about" className="hover:text-indigo-600 transition">О нас</Link>
-          <Link to="/features" className="hover:text-indigo-600 transition">Функционал</Link>
+          <Link to="/resume" className="hover:text-indigo-600 transition">Резюме.AI</Link>
           <Link to="/auth" className="hover:text-indigo-600 transition">Войти</Link>
         </div>
 
