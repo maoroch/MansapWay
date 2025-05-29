@@ -1,12 +1,72 @@
+import {useEffect} from 'react'
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
 
 export default function ProfileForm() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-
-  const onSubmit = (data) => {
-    console.log('Данные формы:', data);
+  const { register,
+    handleSubmit, formState: { errors },reset } = useForm();
+    useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:8080/myProfile', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Ошибка загрузки профиля: ${response.status}`);
+        }
+        
+        const profile = await response.json();
+        
+        reset({
+          skills: profile.skills?.join(', ') || '',
+          interests: profile.interests?.join(', ') || '',
+          educationLevel: profile.educationLevel || '',
+          preferredRegion: profile.preferredRegion || ''
+        });
+      } catch (error) {
+        console.error('Ошибка при загрузке профиля:', error);
+      }
+    };
+    
+    fetchProfile();
+  }, [reset]);
+  
+  const onSubmit = async (data) => {
+    const profileDto = {
+      skills: data.skills.split(',').map(s => s.trim()),
+      interests: data.interests.split(',').map(i => i.trim()),
+      educationLevel: data.educationLevel,
+      preferredRegion: data.preferredRegion
+    };
+    
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:8080/setProfile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // если требуется токен
+        },
+        body: JSON.stringify(profileDto)
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Ошибка: ${response.status} — ${errorText}`);
+      }
+      
+      const result = await response.text();
+      alert('Профиль успешно сохранён:\n' + result);
+    } catch (error) {
+      console.error('Ошибка при отправке:', error);
+      alert('Произошла ошибка при сохранении профиля');
+    }
   };
 
   return (
