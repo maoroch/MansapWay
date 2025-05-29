@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white py-6 mt-10">
+    <footer className="bg-gray-800 text-white py-6">
       {/* Навигация */}
       <div className="justify-center flex mb-10 mt-5 gap-10">
         <Link to="/" className="hover:text-gray-300 transition">Главная</Link>
