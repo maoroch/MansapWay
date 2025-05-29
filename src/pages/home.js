@@ -30,27 +30,46 @@ const HomePage = () => {
 
 
 
-          {/* Блок с карточками */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-gray-800 mb-12">Наши возможности</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((index) => (
-              <div key={index} className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:scale-105 transform transition duration-300">
-                <img
-                  src="/images/card.png"
-                  alt={`card-${index}`}
-                  className="w-full h-60 object-cover"
-                />
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">Карточка {index}</h3>
-                  <p className="text-gray-600">Описание карточки. Здесь можно рассказать о преимуществах, функциях и т.п.</p>
-                </div>
-              </div>
-            ))}
+{/* Блок с карточками */}
+<section className="py-16 bg-white">
+  <div className="max-w-7xl mx-auto px-4 text-center">
+    <h2 className="text-3xl font-bold text-gray-800 mb-12">Наши возможности</h2>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {[
+        {
+          title: "Профориентация с умом",
+          description: "Мы анализируем ваши интересы, навыки и тренды рынка, чтобы рекомендовать лучшие профессии.",
+          image: "/images/card1.jpg",
+        },
+        {
+          title: "Анализ рынка труда",
+          description: "Узнай, какие специальности востребованы в Казахстане прямо сейчас.",
+          image: "/images/card2.jpg",
+        },
+        {
+          title: "Персональные рекомендации",
+          description: "На основе введённых данных система подберёт направления, в которых ты можешь реализоваться.",
+          image: "/images/card3.jpg",
+        },
+      ].map((card, index) => (
+        <div
+          key={index}
+          className="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:scale-105 transform transition duration-300"
+        >
+          <img
+            src={card.image}
+            alt={`card-${index}`}
+            className="w-full h-60 object-cover"
+          />
+          <div className="p-6">
+            <h3 className="text-xl font-semibold mb-2">{card.title}</h3>
+            <p className="text-gray-600">{card.description}</p>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
 
 <div className="service py-16 bg-gray-50">
@@ -115,17 +134,17 @@ const HomePage = () => {
               {
                 title: 'UX/UI-дизайнер',
                 desc: 'Создаёт удобные и красивые интерфейсы для пользователей.',
-                img: '/images/profession-ux.png',
+                img: '/images/profession-ux.jpg',
               },
               {
                 title: 'Data Analyst',
                 desc: 'Анализирует данные и выстраивает отчёты для принятия решений.',
-                img: '/images/profession-data.png',
+                img: '/images/profession-data.jpg',
               },
               {
                 title: 'Техник по IT-безопасности',
                 desc: 'Обеспечивает защиту систем от киберугроз.',
-                img: '/images/profession-security.png',
+                img: '/images/profession-security.jpg',
               },
               {
                 title: 'Специалист по умным устройствам',
