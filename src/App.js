@@ -6,6 +6,7 @@ import ProfileForm from './pages/ProfileForm'
 import CareerRecomendations from './pages/CareerRecomendations'
 import Footer from './components/Footer'
 import Users from './pages/Users';
+import Resume from './pages/ResumeAnalyzer'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/profile" element={<ProfileForm />} />
             <Route path="/feed" element={<CareerRecomendations />} />
+            <Route path="/Resume" element={<Resume />} />
             <Route path="/Users" element={<Users />} />
           </Routes>
         </main>

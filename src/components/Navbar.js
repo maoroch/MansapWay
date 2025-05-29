@@ -9,7 +9,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between relative">
         {/* Логотип слева */}
         <div className="text-2xl font-bold text-indigo-600 z-10">
-          <Link to="/">Logo</Link>
+          <Link to="/">Stark</Link>
         </div>
 
         {/* Центрированное меню (десктоп) */}
