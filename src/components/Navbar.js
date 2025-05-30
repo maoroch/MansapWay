@@ -1,8 +1,14 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import {useEffect, useState} from 'react'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token);
+  }, []);
 
   return (
     <nav className="bg-white shadow-md px-6 py-4">
@@ -17,7 +23,12 @@ const Navbar = () => {
           <Link to="/" className="hover:text-indigo-600 transition">Главная</Link>
           <Link to="/about" className="hover:text-indigo-600 transition">О нас</Link>
           <Link to="/resume" className="hover:text-indigo-600 transition">Резюме.AI</Link>
-          <Link to="/auth" className="hover:text-indigo-600 transition">Войти</Link>
+          {
+            isAuthenticated ?
+              (<Link to="/users" className="hover:text-indigo-600 transition">Профиль</Link>)
+              :
+              (<Link to="/auth" className="hover:text-indigo-600 transition">Войти</Link>)
+          }
         </div>
 
         {/* Бургер-меню (мобилка) */}

@@ -19,4 +19,5 @@ app.post('/analyze-resume', upload.single('resume'), async (req, res) => {
   res.json({ result });
 });
 
+
 app.listen(3001, () => console.log('Сервер запущен: http://localhost:3001'));

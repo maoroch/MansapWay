@@ -21,7 +21,7 @@ const HomePage = () => {
 
   return (
     <div className="relative min-h-screen">
-<ModalWindow />
+{/*<ModalWindow /> пока не нужно*/}
       {/* Геройская секция */}
                 <ChatBot />
 

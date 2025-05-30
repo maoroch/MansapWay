@@ -1,35 +1,79 @@
-import React from "react";
+import React, {useEffect, useState} from 'react'
+import {useNavigate} from 'react-router'
+import ModalWindow from '../components/ModalWindow'
 
-const profileData = {
-  name: "Лилит Дульян",
-  photo: "/1.png",
-  attributes: {
-    "Навыки": "Java, Python, HTML, CSS",
-    "Интересы": "Основной филиал",
-    "Регион": "Акмолинская область",
-    "Город": "Кокшетау",
-    "Уровень образования": "Высшее",
-    "Предпочитаемый регион работы": "Кокшетау",
-    "Пол": "Женский",
-    "Возраст": "20 лет"
-  }
-};
 
 const studentData = {
-  "Фамилия": "Омаров",
-  "Имя": "Ерсултан",
-  "Отчество": "Асылбекович",
-  "Почта": "ersultan.omarov.06@mail.ru",
-  "Телефон": "+7 (777) 308 6793",
-  "Уровень образования": "Среднее",
-  "Место обучения": "ВТК г.Кокшетау",
+  "Фамилия": "—",
+  "Имя": "—",
+  "Отчество": "—",
+  "Почта": "—",
+  "Телефон": "—",
+  "Уровень образования": "—",
+  "Место обучения": "—",
   "Профессия": "",
   "Предпочитаемый регион работы": "",
-  "Интересы": "Люблю разрабатывать коды для сайтов",
-  "Навыки": "Java, Python"
+  "Интересы": "—",
+  "Навыки": "—"
 };
 
 const Users = () => {
+  const [profileData, setProfileData] = useState({
+    name: "—",
+    photo: "/1.png",
+    attributes: {
+      "Навыки": '—',
+      "Интересы": '—',
+      "Уровень образования":  "—",
+      "Предпочитаемый регион работы":  "—"
+    }
+  });
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Вы не авторизованы. Переход на страницу входа...");
+      navigate('/auth')
+      return;
+    }
+    
+    fetch("http://localhost:8080/myProfile", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Ошибка при получении данных профиля");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const formattedData = {
+          name: data.username || "—",
+          photo: "/1.png",
+          attributes: {
+            "Навыки": data.skills.join(", "),
+            "Интересы": data.interests.join(", "),
+            "Уровень образования": data.educationLevel || "—",
+            "Предпочитаемый регион работы": data.preferredRegion || "—"
+          }
+        };
+        console.log(data)
+        setProfileData(formattedData);
+      })
+      .catch((error) => {
+        console.error("Ошибка:", error);
+      });
+  }, []);
+  
+  // if (!profileData) return <div className="text-center mt-10">Загрузка...</div>;
+  
+  const handleClick = () => {
+    navigate("/profile")
+  }
+  
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex flex-col lg:flex-row gap-8">
@@ -52,10 +96,10 @@ const Users = () => {
             ))}
           </div>
         </div>
-
+        
         {/* Правая колонка */}
         <div className="w-full lg:w-2/3 bg-white rounded-lg shadow-lg p-6">
-
+          
           <h3 className="text-lg font-semibold mb-2 text-indigo-700">Информация о студенте</h3>
           <div className="grid sm:grid-cols-2 gap-4 mb-6 text-sm">
             {Object.entries(studentData).slice(0, 9).map(([label, value]) => (
@@ -65,7 +109,7 @@ const Users = () => {
               </div>
             ))}
           </div>
-
+          
           <h3 className="text-lg font-semibold mb-2 text-indigo-700">Дополнительная информация</h3>
           <div className="grid sm:grid-cols-2 gap-4 text-sm">
             {Object.entries(studentData).slice(9).map(([label, value]) => (
@@ -75,10 +119,21 @@ const Users = () => {
               </div>
             ))}
           </div>
+          <div className="mt-6 text-right">
+            <ModalWindow/>
+            <button
+              onClick={handleClick}
+              className="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition"
+            >
+              Редактировать профиль
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
+
 export default Users;
+
