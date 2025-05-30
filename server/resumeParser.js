@@ -1,6 +1,4 @@
 require('dotenv').config(); // <-- важно!
-
-
 const fs = require('fs');
 const pdfParse = require('pdf-parse');
 const { OpenAI } = require('openai');

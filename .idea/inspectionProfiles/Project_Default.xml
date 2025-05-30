@@ -2,7 +2,10 @@
   <profile version="1.0">
     <option name="myName" value="Project Default" />
     <inspection_tool class="DuplicatePropertyInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+<<<<<<< HEAD
     <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
+=======
+>>>>>>> 8f7bc10de62148612094613c9cef09dca1621ec5
     <inspection_tool class="LanguageDetectionInspection" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
       <option name="ignoredErrors">
